@@ -1,5 +1,7 @@
+import GameBoard from './components/GameBoard';
+
 function App() {
-  return <h1>Where&apos;s Wally</h1>;
+  return <GameBoard />;
 }
 
 export default App;
