@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
 
@@ -12,6 +12,27 @@ const CHARACTERS = [
 
 function GameBoard() {
   const [target, setTarget] = useState(null);
+  const boardRef = useRef(null);
+
+  // While the menu is open, close it on a click outside the board or on Escape
+  useEffect(() => {
+    if (!target) return;
+
+    const handleClickOutside = (e) => {
+      if (!boardRef.current.contains(e.target)) setTarget(null);
+    };
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setTarget(null);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [target]);
 
   const handleClick = (e) => {
     const img = e.currentTarget;
@@ -37,7 +58,7 @@ function GameBoard() {
   };
 
   return (
-    <div className={styles.board}>
+    <div className={styles.board} ref={boardRef}>
       <img
         src="/maps/winter.jpg"
         alt="Crowded winter scene"
