@@ -1,0 +1,32 @@
+.menu {
+  position: absolute;
+  list-style: none;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Offsets: half the circle (25px) + a small gap */
+.below {
+  transform: translate(-50%, 35px);
+}
+
+.above {
+  transform: translate(-50%, calc(-100% - 35px));
+}
+
+.option {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option:hover {
+  background: #ffe0e0;
+}

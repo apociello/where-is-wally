@@ -1,5 +1,14 @@
 import { useState } from 'react';
+import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
+
+// Temporary: will come from the API
+const CHARACTERS = [
+  { id: 1, name: 'Wally' },
+  { id: 2, name: 'Wenda' },
+  { id: 3, name: 'Wizard'},
+  { id: 4, name: 'Odlaw' },
+];
 
 function GameBoard() {
   const [target, setTarget] = useState(null);
@@ -22,6 +31,11 @@ function GameBoard() {
     setTarget({ x, y });
   };
 
+  const handleSelect = (character) => {
+    console.log(`Selected ${character.name} at`, target);
+    setTarget(null);
+  };
+
   return (
     <div className={styles.board}>
       <img
@@ -32,10 +46,13 @@ function GameBoard() {
       />
 
       {target && (
-        <div
-          className={styles.targetBox}
-          style={{ left: `${target.x * 100}%`, top: `${target.y * 100}%` }}
-        />
+        <>
+          <div
+            className={styles.targetBox}
+            style={{ left: `${target.x * 100}%`, top: `${target.y * 100}%` }}
+          />
+          <CharacterMenu characters={CHARACTERS} position={target} onSelect={handleSelect} />
+        </>
       )}
     </div>
   );
