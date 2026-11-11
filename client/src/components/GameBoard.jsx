@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import styles from '../styles/GameBoard.module.css';
 
 function GameBoard() {
+  const [target, setTarget] = useState(null);
+
   const handleClick = (e) => {
     const img = e.currentTarget;
     const rect = img.getBoundingClientRect();
@@ -15,15 +18,26 @@ function GameBoard() {
       pixelX: Math.round(x * img.naturalWidth),
       pixelY: Math.round(y * img.naturalHeight),
     });
+
+    setTarget({ x, y });
   };
 
   return (
-    <img
-      src="/maps/winter.jpg"
-      alt="Crowded winter scene"
-      className={styles.image}
-      onClick={handleClick}
-    />
+    <div className={styles.board}>
+      <img
+        src="/maps/winter.jpg"
+        alt="Crowded winter scene"
+        className={styles.image}
+        onClick={handleClick}
+      />
+
+      {target && (
+        <div
+          className={styles.targetBox}
+          style={{ left: `${target.x * 100}%`, top: `${target.y * 100}%` }}
+        />
+      )}
+    </div>
   );
 }
 
