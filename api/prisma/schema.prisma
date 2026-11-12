@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Map {
+  id       Int    @id @default(autoincrement())
+  slug     String @unique
+  name     String
+  imageUrl String
+  width    Int
+  height   Int
+
+  placements Placement[]
+}
+
+model Character {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  avatarUrl String
+
+  placements Placement[]
+}
+
+// Where a character is hidden in a map, as a box in pixels of the original image
+model Placement {
+  mapId       Int
+  characterId Int
+  xMin        Int
+  yMin        Int
+  xMax        Int
+  yMax        Int
+
+  map       Map       @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@id([mapId, characterId])
+}
