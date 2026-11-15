@@ -2,16 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
 
-// Temporary: will come from the API
-const CHARACTERS = [
-  { id: 1, name: 'Wally' },
-  { id: 2, name: 'Wenda' },
-  { id: 3, name: 'Wizard'},
-  { id: 4, name: 'Odlaw' },
-  { id: 5, name: 'Woof'}
-];
-
-function GameBoard() {
+function GameBoard({ map }) {
   const [target, setTarget] = useState(null);
   const boardRef = useRef(null);
 
@@ -61,8 +52,8 @@ function GameBoard() {
   return (
     <div className={styles.board} ref={boardRef}>
       <img
-        src="/maps/winter.jpg"
-        alt="Crowded winter scene"
+        src={map.imageUrl}
+        alt={`${map.name} scene`}
         className={styles.image}
         onClick={handleClick}
       />
@@ -73,7 +64,7 @@ function GameBoard() {
             className={styles.targetBox}
             style={{ left: `${target.x * 100}%`, top: `${target.y * 100}%` }}
           />
-          <CharacterMenu characters={CHARACTERS} position={target} onSelect={handleSelect} />
+          <CharacterMenu characters={map.characters} position={target} onSelect={handleSelect} />
         </>
       )}
     </div>
