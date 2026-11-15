@@ -8,6 +8,7 @@ const CHARACTERS = [
   { id: 2, name: 'Wenda' },
   { id: 3, name: 'Wizard'},
   { id: 4, name: 'Odlaw' },
+  { id: 5, name: 'Woof'}
 ];
 
 function GameBoard() {
