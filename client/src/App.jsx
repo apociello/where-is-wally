@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import GameBoard from './components/GameBoard';
+import CharacterList from './components/CharacterList';
 import { apiFetch } from './lib/api';
 
 // Only one map for now; later it will come from the URL
@@ -18,7 +19,12 @@ function App() {
   if (error) return <p>{error}</p>;
   if (!map) return <p>Loading...</p>;
 
-  return <GameBoard map={map} />;
+  return (
+    <>
+      <GameBoard map={map} />
+      <CharacterList characters={map.characters} />
+    </>
+  );
 }
 
 export default App;

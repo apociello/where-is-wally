@@ -1,13 +1,14 @@
 .board {
   position: relative;
-  max-width: 1200px;
-  margin: 2rem auto;
+  width: fit-content;
+  margin: 0.75rem auto 0;
 }
 
+/* Fits the screen: as big as possible without scrolling, keeping its proportions */
 .image {
   display: block;
-  width: 100%;
-  height: auto;
+  max-width: 100%;
+  max-height: calc(100dvh - 8rem);
 }
 
 .targetBox {
