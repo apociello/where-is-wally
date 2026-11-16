@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
 
-function GameBoard({ map }) {
+function GameBoard({ map, onImageLoad }) {
   const [target, setTarget] = useState(null);
   const boardRef = useRef(null);
 
@@ -56,6 +56,7 @@ function GameBoard({ map }) {
         alt={`${map.name} scene`}
         className={styles.image}
         onClick={handleClick}
+        onLoad={onImageLoad}
       />
 
       {target && (

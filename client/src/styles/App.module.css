@@ -1,0 +1,11 @@
+/* Centered on the screen, the same while the map loads and while the game is created */
+.loading {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.hidden {
+  visibility: hidden;
+}

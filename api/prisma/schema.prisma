@@ -16,6 +16,7 @@ model Map {
   height   Int
 
   placements Placement[]
+  games      Game[]
 }
 
 model Character {
@@ -39,4 +40,13 @@ model Placement {
   character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
 
   @@id([mapId, characterId])
+}
+
+// One play of a map by an anonymous player, identified by a random UUID
+model Game {
+  id        String   @id @default(uuid())
+  mapId     Int
+  startedAt DateTime @default(now())
+
+  map Map @relation(fields: [mapId], references: [id], onDelete: Cascade)
 }
