@@ -25,6 +25,7 @@ model Character {
   avatarUrl String
 
   placements Placement[]
+  foundIn    FoundCharacter[]
 }
 
 // Where a character is hidden in a map, as a box in pixels of the original image
@@ -48,5 +49,18 @@ model Game {
   mapId     Int
   startedAt DateTime @default(now())
 
-  map Map @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  map   Map              @relation(fields: [mapId], references: [id], onDelete: Cascade)
+  found FoundCharacter[]
+}
+
+// A character the player has already found in a game
+model FoundCharacter {
+  gameId      String
+  characterId Int
+  foundAt     DateTime @default(now())
+
+  game      Game      @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+
+  @@id([gameId, characterId])
 }
