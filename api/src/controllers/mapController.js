@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma.js';
+import { TARGET_RADIUS } from '../lib/hitbox.js';
 
 export const getMap = async (req, res) => {
   // select picks exactly which fields leave the server: never the placement boxes
@@ -9,6 +10,7 @@ export const getMap = async (req, res) => {
       slug: true,
       name: true,
       imageUrl: true,
+      width: true,
       placements: {
         orderBy: { characterId: 'asc' },
         select: {
@@ -23,5 +25,10 @@ export const getMap = async (req, res) => {
   }
 
   const { placements, ...mapData } = map;
-  res.json({ ...mapData, characters: placements.map((p) => p.character) });
+  res.json({
+    ...mapData,
+    // The client draws its circle with this, so it matches what the server checks
+    targetRadius: TARGET_RADIUS,
+    characters: placements.map((p) => p.character),
+  });
 };

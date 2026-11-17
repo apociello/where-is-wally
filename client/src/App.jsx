@@ -25,6 +25,18 @@ function App() {
       .catch((err) => setError(err.message));
   };
 
+  const handleGuess = async (character, position) => {
+    try {
+      const result = await apiFetch(`/games/${gameId}/guesses`, {
+        method: 'POST',
+        body: { characterId: character.id, x: position.x, y: position.y },
+      });
+      console.log(character.name, result);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   if (error) return <p>{error}</p>;
   if (!map) return <p className={styles.loading}>Loading...</p>;
 
@@ -36,7 +48,7 @@ function App() {
 
       {/* Hidden until the game exists, so nobody sees the scene before the clock starts */}
       <div className={isReady ? undefined : styles.hidden}>
-        <GameBoard map={map} onImageLoad={startGame} />
+        <GameBoard map={map} onImageLoad={startGame} onGuess={handleGuess} />
         <CharacterList characters={map.characters} />
       </div>
     </>

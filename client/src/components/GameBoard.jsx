@@ -2,9 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
 
-function GameBoard({ map, onImageLoad }) {
+function GameBoard({ map, onImageLoad, onGuess }) {
   const [target, setTarget] = useState(null);
   const boardRef = useRef(null);
+
+  // Circle diameter as a % of the image width, from the radius the server checks with
+  const circleSize = ((map.targetRadius * 2) / map.width) * 100;
 
   // While the menu is open, close it on a click outside the board or on Escape
   useEffect(() => {
@@ -45,7 +48,7 @@ function GameBoard({ map, onImageLoad }) {
   };
 
   const handleSelect = (character) => {
-    console.log(`Selected ${character.name} at`, target);
+    onGuess(character, target);
     setTarget(null);
   };
 
@@ -63,7 +66,11 @@ function GameBoard({ map, onImageLoad }) {
         <>
           <div
             className={styles.targetBox}
-            style={{ left: `${target.x * 100}%`, top: `${target.y * 100}%` }}
+            style={{
+              left: `${target.x * 100}%`,
+              top: `${target.y * 100}%`,
+              width: `${circleSize}%`,
+            }}
           />
           <CharacterMenu characters={map.characters} position={target} onSelect={handleSelect} />
         </>
