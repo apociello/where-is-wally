@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import GameBoard from './components/GameBoard';
 import CharacterList from './components/CharacterList';
 import Feedback from './components/Feedback';
+import EndGameModal from './components/EndGameModal';
 import { apiFetch } from './lib/api';
 import styles from './styles/App.module.css';
 
@@ -13,6 +14,7 @@ function App() {
   const [gameId, setGameId] = useState(null);
   const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
   const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', text }
+  const [durationMs, setDurationMs] = useState(null); // Set by the server when the game ends
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -45,6 +47,7 @@ function App() {
       if (result.correct) {
         setFound((prev) => [...prev, { characterId: character.id, ...result.marker }]);
         setFeedback({ type: 'success', text: `You found ${character.name}!` });
+        if (result.finished) setDurationMs(result.durationMs);
       } else {
         setFeedback({ type: 'error', text: `That's not ${character.name}. Keep looking!` });
       }
@@ -81,6 +84,7 @@ function App() {
       </div>
 
       <Feedback message={feedback} />
+      {durationMs !== null && <EndGameModal durationMs={durationMs} />}
     </>
   );
 }

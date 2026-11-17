@@ -36,6 +36,10 @@ export const createGuess = async (req, res) => {
     return res.status(404).json({ error: 'Game not found' });
   }
 
+  if (game.finishedAt) {
+    return res.status(409).json({ error: 'Game already finished' });
+  }
+
   const placement = await prisma.placement.findUnique({
     where: { mapId_characterId: { mapId: game.mapId, characterId } },
   });
@@ -67,5 +71,23 @@ export const createGuess = async (req, res) => {
     y: (placement.yMin + placement.yMax) / 2 / game.map.height,
   };
 
-  res.json({ correct: true, marker });
+  const [foundCount, totalCount] = await Promise.all([
+    prisma.foundCharacter.count({ where: { gameId: game.id } }),
+    prisma.placement.count({ where: { mapId: game.mapId } }),
+  ]);
+
+  if (foundCount < totalCount) {
+    return res.json({ correct: true, marker, finished: false });
+  }
+
+  // Last character found: the game ends now, timed with the server's clock
+  const finishedAt = new Date();
+  const durationMs = finishedAt - game.startedAt;
+
+  await prisma.game.update({
+    where: { id: game.id },
+    data: { finishedAt, durationMs },
+  });
+
+  res.json({ correct: true, marker, finished: true, durationMs });
 };
