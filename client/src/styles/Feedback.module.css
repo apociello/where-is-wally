@@ -1,0 +1,23 @@
+.container {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.message {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.success {
+  background: var(--color-found);
+}
+
+.error {
+  background: var(--color-error);
+}

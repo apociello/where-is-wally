@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import GameBoard from './components/GameBoard';
 import CharacterList from './components/CharacterList';
+import Feedback from './components/Feedback';
 import { apiFetch } from './lib/api';
 import styles from './styles/App.module.css';
 
@@ -11,6 +12,7 @@ function App() {
   const [map, setMap] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
+  const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', text }
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,6 +20,14 @@ function App() {
       .then(setMap)
       .catch((err) => setError(err.message));
   }, []);
+
+  // Each new message hides itself after 2 seconds
+  useEffect(() => {
+    if (!feedback) return;
+
+    const timer = setTimeout(() => setFeedback(null), 2000);
+    return () => clearTimeout(timer);
+  }, [feedback]);
 
   // The game (and its clock) starts on the server once the image is on screen
   const startGame = () => {
@@ -34,10 +44,12 @@ function App() {
       });
       if (result.correct) {
         setFound((prev) => [...prev, { characterId: character.id, ...result.marker }]);
+        setFeedback({ type: 'success', text: `You found ${character.name}!` });
+      } else {
+        setFeedback({ type: 'error', text: `That's not ${character.name}. Keep looking!` });
       }
-      console.log(character.name, result);
     } catch (err) {
-      console.error(err.message);
+      setFeedback({ type: 'error', text: err.message });
     }
   };
 
@@ -67,6 +79,8 @@ function App() {
         />
         <CharacterList characters={characters} />
       </div>
+
+      <Feedback message={feedback} />
     </>
   );
 }
