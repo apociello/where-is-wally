@@ -15,6 +15,11 @@
   font-size: 0.875rem;
 }
 
+.found {
+  color: var(--color-found);
+  font-weight: bold;
+}
+
 .avatar {
   width: 48px;
   height: 64px;

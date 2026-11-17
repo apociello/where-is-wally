@@ -27,6 +27,13 @@
   cursor: pointer;
 }
 
-.option:hover {
+.option:hover:not(:disabled) {
   background: #ffe0e0;
+}
+
+/* Already found: green with a tick, and can't be picked again */
+.option:disabled {
+  color: var(--color-found);
+  font-weight: bold;
+  cursor: default;
 }

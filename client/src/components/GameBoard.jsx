@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import CharacterMenu from './CharacterMenu';
 import styles from '../styles/GameBoard.module.css';
 
-function GameBoard({ map, onImageLoad, onGuess }) {
+function GameBoard({ map, characters, found, onImageLoad, onGuess }) {
   const [target, setTarget] = useState(null);
   const boardRef = useRef(null);
 
@@ -62,6 +62,18 @@ function GameBoard({ map, onImageLoad, onGuess }) {
         onLoad={onImageLoad}
       />
 
+      {found.map((marker) => (
+        <div
+          key={marker.characterId}
+          className={styles.marker}
+          style={{
+            left: `${marker.x * 100}%`,
+            top: `${marker.y * 100}%`,
+            width: `${circleSize}%`,
+          }}
+        />
+      ))}
+
       {target && (
         <>
           <div
@@ -72,7 +84,7 @@ function GameBoard({ map, onImageLoad, onGuess }) {
               width: `${circleSize}%`,
             }}
           />
-          <CharacterMenu characters={map.characters} position={target} onSelect={handleSelect} />
+          <CharacterMenu characters={characters} position={target} onSelect={handleSelect} />
         </>
       )}
     </div>

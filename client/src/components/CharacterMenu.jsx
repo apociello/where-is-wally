@@ -11,8 +11,14 @@ function CharacterMenu({ characters, position, onSelect }) {
     >
       {characters.map((character) => (
         <li key={character.id}>
-          <button type="button" className={styles.option} onClick={() => onSelect(character)}>
+          <button
+            type="button"
+            className={styles.option}
+            disabled={character.found}
+            onClick={() => onSelect(character)}
+          >
             {character.name}
+            {character.found && ' ✓'}
           </button>
         </li>
       ))}

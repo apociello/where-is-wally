@@ -10,6 +10,7 @@ const MAP_SLUG = 'winter';
 function App() {
   const [map, setMap] = useState(null);
   const [gameId, setGameId] = useState(null);
+  const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -31,6 +32,9 @@ function App() {
         method: 'POST',
         body: { characterId: character.id, x: position.x, y: position.y },
       });
+      if (result.correct) {
+        setFound((prev) => [...prev, { characterId: character.id, ...result.marker }]);
+      }
       console.log(character.name, result);
     } catch (err) {
       console.error(err.message);
@@ -42,14 +46,26 @@ function App() {
 
   const isReady = gameId !== null;
 
+  // Each character with a found flag, so the menu and the list only have to check character.found
+  const characters = map.characters.map((character) => ({
+    ...character,
+    found: found.some((f) => f.characterId === character.id),
+  }));
+
   return (
     <>
       {!isReady && <p className={styles.loading}>Loading...</p>}
 
       {/* Hidden until the game exists, so nobody sees the scene before the clock starts */}
       <div className={isReady ? undefined : styles.hidden}>
-        <GameBoard map={map} onImageLoad={startGame} onGuess={handleGuess} />
-        <CharacterList characters={map.characters} />
+        <GameBoard
+          map={map}
+          characters={characters}
+          found={found}
+          onImageLoad={startGame}
+          onGuess={handleGuess}
+        />
+        <CharacterList characters={characters} />
       </div>
     </>
   );
