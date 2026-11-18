@@ -1,6 +1,16 @@
 import { prisma } from '../lib/prisma.js';
 import { TARGET_RADIUS } from '../lib/hitbox.js';
 
+// Just what the map selection needs: no characters, no boxes
+export const getMaps = async (req, res) => {
+  const maps = await prisma.map.findMany({
+    orderBy: { id: 'asc' },
+    select: { slug: true, name: true, imageUrl: true },
+  });
+
+  res.json(maps);
+};
+
 export const getMap = async (req, res) => {
   // select picks exactly which fields leave the server: never the placement boxes
   const map = await prisma.map.findUnique({

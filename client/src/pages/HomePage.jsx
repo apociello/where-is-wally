@@ -6,7 +6,7 @@ function HomePage() {
     <main className={styles.home}>
       <h1>Where's Wally?</h1>
 
-      <Link to="/maps/winter" className={styles.play}>
+      <Link to="/maps" className={styles.play}>
         Play
       </Link>
     </main>

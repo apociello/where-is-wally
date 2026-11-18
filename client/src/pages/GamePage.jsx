@@ -5,6 +5,7 @@ import CharacterList from '../components/CharacterList';
 import Feedback from '../components/Feedback';
 import EndGameModal from '../components/EndGameModal';
 import ErrorPage from './ErrorPage';
+import Loading from '../components/Loading';
 import { apiFetch } from '../lib/api';
 import styles from '../styles/GamePage.module.css';
 
@@ -60,7 +61,7 @@ function GamePage() {
     apiFetch(`/games/${gameId}`, { method: 'PATCH', body: { name } });
 
   if (error) return <ErrorPage message={error} />;
-  if (!map) return <p className={styles.loading}>Loading...</p>;
+  if (!map) return <Loading />;
 
   const isReady = gameId !== null;
 
@@ -72,7 +73,7 @@ function GamePage() {
 
   return (
     <>
-      {!isReady && <p className={styles.loading}>Loading...</p>}
+      {!isReady && <Loading />}
 
       {/* Hidden until the game exists, so nobody sees the scene before the clock starts */}
       <div className={isReady ? undefined : styles.hidden}>
