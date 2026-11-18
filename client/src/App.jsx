@@ -56,6 +56,9 @@ function App() {
     }
   };
 
+  const saveName = (name) =>
+    apiFetch(`/games/${gameId}`, { method: 'PATCH', body: { name } });
+
   if (error) return <p>{error}</p>;
   if (!map) return <p className={styles.loading}>Loading...</p>;
 
@@ -84,7 +87,7 @@ function App() {
       </div>
 
       <Feedback message={feedback} />
-      {durationMs !== null && <EndGameModal durationMs={durationMs} />}
+      {durationMs !== null && <EndGameModal durationMs={durationMs} onSaveName={saveName} />}
     </>
   );
 }

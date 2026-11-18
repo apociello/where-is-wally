@@ -1,6 +1,8 @@
 import { prisma } from '../lib/prisma.js';
 import { TARGET_RADIUS, circleTouchesBox } from '../lib/hitbox.js';
 
+const MAX_NAME_LENGTH = 20;
+
 const isFraction = (value) => typeof value === 'number' && value >= 0 && value <= 1;
 
 export const createGame = async (req, res) => {
@@ -90,4 +92,34 @@ export const createGuess = async (req, res) => {
   });
 
   res.json({ correct: true, marker, finished: true, durationMs });
+};
+
+// Body: { name }. Only for a finished game, and only once
+export const saveName = async (req, res) => {
+  const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
+
+  if (name.length === 0 || name.length > MAX_NAME_LENGTH) {
+    return res.status(400).json({ error: `Name must be 1 to ${MAX_NAME_LENGTH} characters` });
+  }
+
+  const game = await prisma.game.findUnique({ where: { id: req.params.gameId } });
+
+  if (!game) {
+    return res.status(404).json({ error: 'Game not found' });
+  }
+
+  if (!game.finishedAt) {
+    return res.status(409).json({ error: 'Game not finished yet' });
+  }
+
+  if (game.playerName) {
+    return res.status(409).json({ error: 'Name already saved' });
+  }
+
+  await prisma.game.update({
+    where: { id: game.id },
+    data: { playerName: name },
+  });
+
+  res.json({ playerName: name });
 };

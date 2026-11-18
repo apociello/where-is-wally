@@ -50,6 +50,7 @@ model Game {
   startedAt  DateTime  @default(now())
   finishedAt DateTime?
   durationMs Int?
+  playerName String?
 
   map   Map              @relation(fields: [mapId], references: [id], onDelete: Cascade)
   found FoundCharacter[]
