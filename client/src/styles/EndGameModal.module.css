@@ -54,20 +54,13 @@
   cursor: default;
 }
 
-.saved {
-  margin-top: 1.5rem;
-  color: var(--color-found);
-  font-weight: bold;
-}
-
 .error {
   color: var(--color-error);
   font-size: 0.875rem;
 }
 
-.modal .playAgain {
+.menu {
+  display: inline-block;
   margin-top: 1.5rem;
-  background: none;
   color: inherit;
-  text-decoration: underline;
 }

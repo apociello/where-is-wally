@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router';
 import { formatTime } from '../lib/formatTime';
 import styles from '../styles/EndGameModal.module.css';
 
 function EndGameModal({ durationMs, onSaveName }) {
   const dialogRef = useRef(null);
   const [name, setName] = useState('');
-  const [status, setStatus] = useState('idle'); // 'idle' | 'saving' | 'saved'
+  const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
 
   // showModal() opens the <dialog> on top of everything and blocks the page behind it
@@ -16,15 +17,14 @@ function EndGameModal({ durationMs, onSaveName }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus('saving');
+    setIsSaving(true);
     setError(null);
 
     try {
       await onSaveName(name);
-      setStatus('saved');
     } catch (err) {
       setError(err.message);
-      setStatus('idle');
+      setIsSaving(false);
     }
   };
 
@@ -36,30 +36,26 @@ function EndGameModal({ durationMs, onSaveName }) {
         Your time: <strong className={styles.time}>{formatTime(durationMs)}</strong>
       </p>
 
-      {status === 'saved' ? (
-        <p className={styles.saved}>Saved! ✓</p>
-      ) : (
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <label htmlFor="player-name">Your name for the leaderboard</label>
-          <div className={styles.row}>
-            <input
-              id="player-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              maxLength={20}
-              required
-            />
-            <button type="submit" disabled={status === 'saving'}>
-              {status === 'saving' ? 'Saving...' : 'Save'}
-            </button>
-          </div>
-          {error && <p className={styles.error}>{error}</p>}
-        </form>
-      )}
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label htmlFor="player-name">Your name for the leaderboard</label>
+        <div className={styles.row}>
+          <input
+            id="player-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={20}
+            required
+          />
+          <button type="submit" disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save'}
+          </button>
+        </div>
+        {error && <p className={styles.error}>{error}</p>}
+      </form>
 
-      <button type="button" className={styles.playAgain} onClick={() => window.location.reload()}>
-        Play again
-      </button>
+      <Link to="/maps" className={styles.menu}>
+        Back to menu
+      </Link>
     </dialog>
   );
 }

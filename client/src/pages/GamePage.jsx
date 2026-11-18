@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import GameBoard from '../components/GameBoard';
 import CharacterList from '../components/CharacterList';
 import Feedback from '../components/Feedback';
@@ -11,6 +11,7 @@ import styles from '../styles/GamePage.module.css';
 
 function GamePage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [map, setMap] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
@@ -57,8 +58,10 @@ function GamePage() {
     }
   };
 
-  const saveName = (name) =>
-    apiFetch(`/games/${gameId}`, { method: 'PATCH', body: { name } });
+  const saveName = async (name) => {
+    await apiFetch(`/games/${gameId}`, { method: 'PATCH', body: { name } });
+    navigate(`/maps/${slug}/leaderboard`);
+  };
 
   if (error) return <ErrorPage message={error} />;
   if (!map) return <Loading />;

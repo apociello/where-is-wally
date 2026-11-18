@@ -1,0 +1,42 @@
+.page {
+  padding: 1.5rem;
+}
+
+.page h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+.empty {
+  text-align: center;
+}
+
+.table {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th:first-child,
+.table td:first-child {
+  width: 3rem;
+}
+
+.table th:last-child,
+.table td:last-child {
+  text-align: right;
+}
