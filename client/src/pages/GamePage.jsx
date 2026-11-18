@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import GameBoard from './components/GameBoard';
-import CharacterList from './components/CharacterList';
-import Feedback from './components/Feedback';
-import EndGameModal from './components/EndGameModal';
-import { apiFetch } from './lib/api';
-import styles from './styles/App.module.css';
+import { useParams } from 'react-router';
+import GameBoard from '../components/GameBoard';
+import CharacterList from '../components/CharacterList';
+import Feedback from '../components/Feedback';
+import EndGameModal from '../components/EndGameModal';
+import ErrorPage from './ErrorPage';
+import { apiFetch } from '../lib/api';
+import styles from '../styles/GamePage.module.css';
 
-// Only one map for now; later it will come from the URL
-const MAP_SLUG = 'winter';
-
-function App() {
+function GamePage() {
+  const { slug } = useParams();
   const [map, setMap] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
@@ -18,10 +18,10 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    apiFetch(`/maps/${MAP_SLUG}`)
+    apiFetch(`/maps/${slug}`)
       .then(setMap)
       .catch((err) => setError(err.message));
-  }, []);
+  }, [slug]);
 
   // Each new message hides itself after 2 seconds
   useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
 
   // The game (and its clock) starts on the server once the image is on screen
   const startGame = () => {
-    apiFetch(`/maps/${MAP_SLUG}/games`, { method: 'POST' })
+    apiFetch(`/maps/${slug}/games`, { method: 'POST' })
       .then((data) => setGameId(data.gameId))
       .catch((err) => setError(err.message));
   };
@@ -59,7 +59,7 @@ function App() {
   const saveName = (name) =>
     apiFetch(`/games/${gameId}`, { method: 'PATCH', body: { name } });
 
-  if (error) return <p>{error}</p>;
+  if (error) return <ErrorPage message={error} />;
   if (!map) return <p className={styles.loading}>Loading...</p>;
 
   const isReady = gameId !== null;
@@ -92,4 +92,4 @@ function App() {
   );
 }
 
-export default App;
+export default GamePage;
