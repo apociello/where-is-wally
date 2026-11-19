@@ -10,6 +10,20 @@ const characters = [
 
 const maps = [
   {
+    slug: 'hollywood',
+    name: 'Hollywood',
+    imageUrl: '/maps/hollywood.jpg',
+    width: 3000,
+    height: 1935,
+    placements: {
+      Wally: { xMin: 2092, yMin: 816, xMax: 2118, yMax: 868 },
+      Wenda: { xMin: 1762, yMin: 1287, xMax: 1782, yMax: 1311 },
+      Wizard: { xMin: 2057, yMin: 1287, xMax: 2086, yMax: 1339 },
+      Odlaw: { xMin: 1652, yMin: 1525, xMax: 1672, yMax: 1562 },
+      Woof: { xMin: 2540, yMin: 1247, xMax: 2563, yMax: 1270 },
+    },
+  },
+  {
     slug: 'winter',
     name: 'Winter',
     imageUrl: '/maps/winter.jpg',
@@ -39,18 +53,6 @@ const maps = [
     },
   },
   {
-    slug: 'factory',
-    name: 'Factory',
-    imageUrl: '/maps/factory.jpg',
-    width: 2560,
-    height: 1791,
-    placements: {
-      Wally: { xMin: 1258, yMin: 338, xMax: 1279, yMax: 405 },
-      Wenda: { xMin: 1266, yMin: 1575, xMax: 1307, yMax: 1649 },
-      Odlaw: { xMin: 574, yMin: 1203, xMax: 592, yMax: 1264 },
-    },
-  },
-  {
     slug: 'space',
     name: 'Space',
     imageUrl: '/maps/space.jpg',
@@ -75,6 +77,11 @@ async function main() {
       create: character,
     });
   }
+
+  // Maps removed from this file are removed from the database too (with their placements and games)
+  await prisma.map.deleteMany({
+    where: { slug: { notIn: maps.map((map) => map.slug) } },
+  });
 
   for (const { placements, ...mapData } of maps) {
     const map = await prisma.map.upsert({
