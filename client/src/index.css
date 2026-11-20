@@ -9,4 +9,6 @@
   --color-error: #c0392b;
   --color-wally-red: #d62828;
   --color-wally-blue: #2fa4d8;
+  --color-ink: #1a1a1a;
+  --stripes: repeating-linear-gradient(#dff2fb 0 48px, #fff 48px 96px);
 }

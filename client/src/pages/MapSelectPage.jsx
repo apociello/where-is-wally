@@ -23,7 +23,7 @@ function MapSelectPage() {
       <Link to="/" className={styles.back}>
         ← Back
       </Link>
-      <h1>Choose a map</h1>
+      <h1 className={styles.title}>Choose a map</h1>
 
       <ul className={styles.maps}>
         {maps.map((map) => (
