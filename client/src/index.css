@@ -7,4 +7,6 @@
 :root {
   --color-found: #1f8a4c;
   --color-error: #c0392b;
+  --color-wally-red: #d62828;
+  --color-wally-blue: #2fa4d8;
 }
