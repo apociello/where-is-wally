@@ -4,7 +4,12 @@ import styles from '../styles/Feedback.module.css';
 function Feedback({ message }) {
   return (
     <div role="status" className={styles.container}>
-      {message && <p className={`${styles.message} ${styles[message.type]}`}>{message.text}</p>}
+      {message && (
+        // A new key for each message restarts its fade animation
+        <p key={message.id} className={`${styles.message} ${styles[message.type]}`}>
+          {message.text}
+        </p>
+      )}
     </div>
   );
 }

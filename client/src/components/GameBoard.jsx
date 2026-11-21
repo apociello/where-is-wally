@@ -77,6 +77,7 @@ function GameBoard({ map, characters, found, onImageLoad, onGuess }) {
       {target && (
         <>
           <div
+            key={`${target.x}-${target.y}`}
             className={styles.targetBox}
             style={{
               left: `${target.x * 100}%`,

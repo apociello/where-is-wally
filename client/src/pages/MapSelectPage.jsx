@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import Loading from '../components/Loading';
+import BackLink from '../components/BackLink';
 import ErrorPage from './ErrorPage';
 import { apiFetch } from '../lib/api';
 import styles from '../styles/MapSelectPage.module.css';
@@ -20,9 +21,9 @@ function MapSelectPage() {
 
   return (
     <main className={styles.page}>
-      <Link to="/" className={styles.back}>
+      <BackLink to="/" className={styles.back}>
         ← Back
-      </Link>
+      </BackLink>
       <h1 className={styles.title}>Choose a map</h1>
 
       <ul className={styles.maps}>

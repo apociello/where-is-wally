@@ -6,7 +6,6 @@
   align-items: center;
   justify-content: center;
   gap: 4rem;
-  background: var(--stripes);
 }
 
 .logo {
@@ -21,7 +20,6 @@
   border-radius: 6px;
   background: var(--color-wally-red);
   color: #fff;
-  font-family: system-ui, sans-serif;
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 0.1em;

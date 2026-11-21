@@ -7,11 +7,32 @@
 }
 
 .message {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.25rem;
+  border: 3px solid var(--color-ink);
   border-radius: 6px;
   color: #fff;
-  font-weight: bold;
+  font-weight: 800;
   white-space: nowrap;
+  box-shadow: 2px 2px 0 var(--color-ink);
+  animation: show-and-hide 2s ease forwards;
+}
+
+@keyframes show-and-hide {
+  0% {
+    opacity: 0;
+    transform: translateY(-0.5rem) rotate(-1deg);
+  }
+
+  10%,
+  80% {
+    opacity: 1;
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-0.5rem) rotate(-1deg);
+  }
 }
 
 .success {

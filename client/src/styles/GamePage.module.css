@@ -1,3 +1,18 @@
+.game {
+  width: fit-content;
+  margin: 0 auto;
+}
+
 .hidden {
   visibility: hidden;
+}
+
+.bottomBar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+}
+
+.back {
+  justify-self: start;
 }

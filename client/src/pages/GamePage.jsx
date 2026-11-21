@@ -6,6 +6,7 @@ import Feedback from '../components/Feedback';
 import EndGameModal from '../components/EndGameModal';
 import ErrorPage from './ErrorPage';
 import Loading from '../components/Loading';
+import BackLink from '../components/BackLink';
 import { apiFetch } from '../lib/api';
 import styles from '../styles/GamePage.module.css';
 
@@ -15,7 +16,7 @@ function GamePage() {
   const [map, setMap] = useState(null);
   const [gameId, setGameId] = useState(null);
   const [found, setFound] = useState([]); // [{ characterId, x, y }]: x, y = where to draw its marker
-  const [feedback, setFeedback] = useState(null); // { type: 'success' | 'error', text }
+  const [feedback, setFeedback] = useState(null); // { id, type: 'success' | 'error', text }
   const [durationMs, setDurationMs] = useState(null); // Set by the server when the game ends
   const [error, setError] = useState(null);
 
@@ -48,13 +49,13 @@ function GamePage() {
       });
       if (result.correct) {
         setFound((prev) => [...prev, { characterId: character.id, ...result.marker }]);
-        setFeedback({ type: 'success', text: `You found ${character.name}!` });
+        setFeedback({ id: Date.now(), type: 'success', text: `You found ${character.name}!` });
         if (result.finished) setDurationMs(result.durationMs);
       } else {
-        setFeedback({ type: 'error', text: `That's not ${character.name}. Keep looking!` });
+        setFeedback({ id: Date.now(), type: 'error', text: `That's not ${character.name}. Keep looking!` });
       }
     } catch (err) {
-      setFeedback({ type: 'error', text: err.message });
+      setFeedback({ id: Date.now(), type: 'error', text: err.message });
     }
   };
 
@@ -79,7 +80,7 @@ function GamePage() {
       {!isReady && <Loading />}
 
       {/* Hidden until the game exists, so nobody sees the scene before the clock starts */}
-      <div className={isReady ? undefined : styles.hidden}>
+      <div className={isReady ? styles.game : `${styles.game} ${styles.hidden}`}>
         <GameBoard
           map={map}
           characters={characters}
@@ -87,7 +88,12 @@ function GamePage() {
           onImageLoad={startGame}
           onGuess={handleGuess}
         />
-        <CharacterList characters={characters} />
+        <div className={styles.bottomBar}>
+          <BackLink to="/maps" className={styles.back}>
+            ← Menu
+          </BackLink>
+          <CharacterList characters={characters} />
+        </div>
       </div>
 
       <Feedback message={feedback} />
