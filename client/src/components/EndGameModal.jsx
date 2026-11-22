@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router';
+import BackLink from './BackLink';
 import { formatTime } from '../lib/formatTime';
 import styles from '../styles/EndGameModal.module.css';
 
@@ -31,19 +31,18 @@ function EndGameModal({ durationMs, onSaveName }) {
   return (
     // onCancel: Escape doesn't close it, so the name isn't lost by accident
     <dialog ref={dialogRef} className={styles.modal} onCancel={(e) => e.preventDefault()}>
-      <h2>You found everyone!</h2>
-      <p>
-        Your time: <strong className={styles.time}>{formatTime(durationMs)}</strong>
-      </p>
+      <h2 className={styles.title}>You found everyone!</h2>
+      <p className={styles.time}>{formatTime(durationMs)}</p>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <label htmlFor="player-name">Your name for the leaderboard</label>
         <div className={styles.row}>
           <input
-            id="player-name"
             value={name}
+            placeholder="Your name"
+            aria-label="Your name"
             onChange={(e) => setName(e.target.value)}
             maxLength={20}
+            autoComplete="off"
             required
           />
           <button type="submit" disabled={isSaving}>
@@ -53,9 +52,9 @@ function EndGameModal({ durationMs, onSaveName }) {
         {error && <p className={styles.error}>{error}</p>}
       </form>
 
-      <Link to="/maps" className={styles.menu}>
-        Back to menu
-      </Link>
+      <BackLink to="/maps" className={styles.menu}>
+        ← Back to menu
+      </BackLink>
     </dialog>
   );
 }
