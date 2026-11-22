@@ -16,7 +16,7 @@
   background: #fff;
   color: var(--color-wally-blue);
   font-size: 2.25rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 5px 5px 0 var(--color-wally-red);
@@ -50,7 +50,7 @@
 .table td {
   padding: 0.75rem 1.25rem;
   border-bottom: 1px solid rgb(26 26 26 / 25%);
-  font-weight: 600;
+  font-weight: 400;
   text-align: left;
 }
 
@@ -60,7 +60,7 @@
 
 .table tbody tr:first-child td {
   color: var(--color-wally-red);
-  font-weight: 800;
+  font-weight: 700;
 }
 
 .table td:first-child {

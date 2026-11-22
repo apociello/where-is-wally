@@ -11,7 +11,7 @@
   border: 3px solid var(--color-ink);
   border-radius: 6px;
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   white-space: nowrap;
   box-shadow: 2px 2px 0 var(--color-ink);
   animation: show-and-hide 2s ease forwards;

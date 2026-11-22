@@ -1,3 +1,33 @@
+@font-face {
+  font-family: 'Grandstander';
+  src: url('/fonts/grandstander-v20-latin-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+  ascent-override: 91%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Grandstander';
+  src: url('/fonts/grandstander-v20-latin-600.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+  ascent-override: 91%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Grandstander';
+  src: url('/fonts/grandstander-v20-latin-700.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+  ascent-override: 91%;
+  descent-override: 26%;
+  line-gap-override: 0%;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +35,7 @@
 }
 
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'Grandstander', system-ui, sans-serif;
   background: var(--stripes);
 }
 

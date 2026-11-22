@@ -38,7 +38,7 @@
   margin-bottom: 1rem;
   color: var(--color-wally-red);
   font-size: 1.1rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -51,7 +51,7 @@
   background: #fff;
   color: var(--color-ink);
   font-size: 2.25rem;
-  font-weight: 800;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   box-shadow: 4px 4px 0 var(--color-wally-red);
   transform: rotate(-2deg);
@@ -90,7 +90,7 @@
   background: var(--color-wally-red);
   color: #fff;
   font: inherit;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 3px 3px 0 var(--color-ink);

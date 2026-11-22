@@ -19,7 +19,7 @@
   background: #fff;
   color: var(--color-wally-blue);
   font-size: 2.25rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   box-shadow: 5px 5px 0 var(--color-wally-red);
@@ -74,7 +74,7 @@
   display: block;
   padding: 0.75rem;
   color: var(--color-wally-red);
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-align: center;
   text-transform: uppercase;
