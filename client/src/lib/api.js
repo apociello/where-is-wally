@@ -6,8 +6,15 @@ export async function apiFetch(path, { body, ...options } = {}) {
     options.body = JSON.stringify(body);
   }
 
-  const res = await fetch(`${API_URL}${path}`, options);
-  const data = await res.json();
+  let res;
+  try {
+    res = await fetch(`${API_URL}${path}`, options);
+  } catch {
+    throw new Error("Can't reach the server. Please try again later.");
+  }
+
+  // null if the response isn't JSON (e.g. an error page from the hosting)
+  const data = await res.json().catch(() => null);
 
   if (!res.ok) {
     throw new Error(data?.error ?? 'Something went wrong');

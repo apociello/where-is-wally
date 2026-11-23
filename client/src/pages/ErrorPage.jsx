@@ -1,10 +1,11 @@
-import { Link } from 'react-router';
+import BackLink from '../components/BackLink';
+import styles from '../styles/ErrorPage.module.css';
 
 function ErrorPage({ message = 'Page not found' }) {
   return (
-    <main>
-      <h1>{message}</h1>
-      <Link to="/">Back to the home page</Link>
+    <main className={styles.page}>
+      <h1 className={styles.message}>{message}</h1>
+      <BackLink to="/">← Back to home</BackLink>
     </main>
   );
 }

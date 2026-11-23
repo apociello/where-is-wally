@@ -37,12 +37,15 @@ function GameBoard({ map, characters, found, onImageLoad, onGuess }) {
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
-    console.log({
-      x: x.toFixed(4),
-      y: y.toFixed(4),
-      pixelX: Math.round(x * img.naturalWidth),
-      pixelY: Math.round(y * img.naturalHeight),
-    });
+    // Only in development: helps to measure where the characters are when adding a map
+    if (import.meta.env.DEV) {
+      console.log({
+        x: x.toFixed(4),
+        y: y.toFixed(4),
+        pixelX: Math.round(x * img.naturalWidth),
+        pixelY: Math.round(y * img.naturalHeight),
+      });
+    }
 
     setTarget({ x, y });
   };
