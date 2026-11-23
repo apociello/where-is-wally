@@ -29,8 +29,8 @@ function MapSelectPage() {
       <ul className={styles.maps}>
         {maps.map((map) => (
           <li key={map.slug}>
-            <Link to={`/maps/${map.slug}`} className={styles.card}>
-              <img src={map.imageUrl} alt="" className={styles.thumbnail} />
+            <Link to={`/maps/${map.slug}`} className={styles.card} draggable={false}>
+              <img src={map.imageUrl} alt="" className={styles.thumbnail} draggable={false} />
               <span className={styles.name}>{map.name}</span>
             </Link>
           </li>

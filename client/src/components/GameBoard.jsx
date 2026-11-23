@@ -58,6 +58,7 @@ function GameBoard({ map, characters, found, onImageLoad, onGuess }) {
         src={map.imageUrl}
         alt={`${map.name} scene`}
         className={styles.image}
+        draggable={false}
         onClick={handleClick}
         onLoad={onImageLoad}
       />

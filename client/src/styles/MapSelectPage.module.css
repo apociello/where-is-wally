@@ -54,12 +54,12 @@
   color: var(--color-ink);
   text-decoration: none;
   box-shadow: 6px 6px 0 var(--color-wally-blue);
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
 }
 
 .card:hover {
-  transform: translate(-3px, -3px) rotate(-1deg);
-  box-shadow: 9px 9px 0 var(--color-wally-blue);
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--color-wally-blue);
 }
 
 .thumbnail {
