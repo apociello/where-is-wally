@@ -6,6 +6,7 @@
   color: var(--color-ink);
   font-weight: 400;
   text-decoration: none;
+  white-space: nowrap;
   box-shadow: 3px 3px 0 var(--color-wally-blue);
   transition: transform 0.1s, box-shadow 0.1s;
 }
