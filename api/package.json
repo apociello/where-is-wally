@@ -6,6 +6,7 @@
     "test": "vitest",
     "dev": "node --watch --env-file=.env src/server.js",
     "start": "node src/server.js",
+    "build": "prisma generate && prisma migrate deploy && prisma db seed",
     "test:migrate": "NODE_ENV=test prisma migrate deploy"
   },
   "keywords": [],
